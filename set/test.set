@@ -1,0 +1,9 @@
+init a
+init b
+init c
+insert a 1 2
+insert b 2 3
+cal c=a-b
+print a
+print b
+exit

@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/wangzhihao/code/school_works/data_structure/avl/avl.cpp
+avl.h
+/home/wangzhihao/code/school_works/data_structure/avl/avl.h
+iostream
+-
+
+/home/wangzhihao/code/school_works/data_structure/avl/avl.h
+string
+-
+
+/home/wangzhihao/code/school_works/data_structure/avl/main.cpp
+iostream
+-
+fstream
+-
+string
+-
+avl.h
+/home/wangzhihao/code/school_works/data_structure/avl/avl.h
+

@@ -1,0 +1,1 @@
+/usr/bin/c++   -O0 -Wall -g -ggdb  -rdynamic CMakeFiles/Demo.dir/avl.cpp.o CMakeFiles/Demo.dir/main.cpp.o  -o Demo 

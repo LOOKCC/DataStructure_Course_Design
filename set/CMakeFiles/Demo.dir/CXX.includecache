@@ -1,0 +1,40 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/wangzhihao/code/school_works/data_structure/05/set/avl.cpp
+avl.h
+/home/wangzhihao/code/school_works/data_structure/05/set/avl.h
+iostream
+-
+
+/home/wangzhihao/code/school_works/data_structure/05/set/avl.h
+
+/home/wangzhihao/code/school_works/data_structure/05/set/main.cpp
+iostream
+-
+fstream
+-
+string
+-
+set.h
+/home/wangzhihao/code/school_works/data_structure/05/set/set.h
+
+/home/wangzhihao/code/school_works/data_structure/05/set/set.cpp
+set.h
+/home/wangzhihao/code/school_works/data_structure/05/set/set.h
+iostream
+-
+fstream
+-
+
+/home/wangzhihao/code/school_works/data_structure/05/set/set.h
+avl.h
+/home/wangzhihao/code/school_works/data_structure/05/set/avl.h
+string
+-
+

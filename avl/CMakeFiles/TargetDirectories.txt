@@ -1,0 +1,3 @@
+/home/wangzhihao/code/school_works/data_structure/avl/CMakeFiles/rebuild_cache.dir
+/home/wangzhihao/code/school_works/data_structure/avl/CMakeFiles/Demo.dir
+/home/wangzhihao/code/school_works/data_structure/avl/CMakeFiles/edit_cache.dir
