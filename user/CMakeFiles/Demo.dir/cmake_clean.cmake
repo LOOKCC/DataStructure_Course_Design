@@ -2,6 +2,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/Demo.dir/avl.cpp.o"
   "CMakeFiles/Demo.dir/main.cpp.o"
   "CMakeFiles/Demo.dir/set.cpp.o"
+  "CMakeFiles/Demo.dir/user.cpp.o"
   "Demo.pdb"
   "Demo"
 )

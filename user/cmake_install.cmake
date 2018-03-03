@@ -1,4 +1,4 @@
-# Install script for directory: /home/wangzhihao/code/school_works/data_structure/set
+# Install script for directory: /home/wangzhihao/code/school_works/data_structure/05/user
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/wangzhihao/code/school_works/data_structure/set/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/wangzhihao/code/school_works/data_structure/05/user/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

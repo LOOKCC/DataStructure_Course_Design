@@ -7,8 +7,14 @@ CMakeFiles/Demo.dir/avl.cpp.o: avl.h
 CMakeFiles/Demo.dir/main.cpp.o: avl.h
 CMakeFiles/Demo.dir/main.cpp.o: main.cpp
 CMakeFiles/Demo.dir/main.cpp.o: set.h
+CMakeFiles/Demo.dir/main.cpp.o: user.h
 
 CMakeFiles/Demo.dir/set.cpp.o: avl.h
 CMakeFiles/Demo.dir/set.cpp.o: set.cpp
 CMakeFiles/Demo.dir/set.cpp.o: set.h
+
+CMakeFiles/Demo.dir/user.cpp.o: avl.h
+CMakeFiles/Demo.dir/user.cpp.o: set.h
+CMakeFiles/Demo.dir/user.cpp.o: user.cpp
+CMakeFiles/Demo.dir/user.cpp.o: user.h
 

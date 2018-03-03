@@ -1,7 +1,7 @@
 #include<iostream>
 #include<fstream>
 #include<string>
-#include"set.h"
+#include"user.h"
 using namespace std;
 typedef struct user_node{
 	user* user_info;
@@ -21,6 +21,8 @@ user_node* insert_tail(user_node* newnode, user_node* head);
 void delete_list(user_node* head);
 string process(string str);
 
+int number;
+
 int main(){
 	//instructions
 	cout<<"It's a code or interactive shell for set"<<endl;
@@ -33,6 +35,9 @@ int main(){
 	string filename;            //code mode filename
 	ifstream fin;               //code mode file
 	user_node* head = NULL;
+	ifstream number_file;
+	number_file.open("./data/number.txt");
+	number_file>>number;
 	getline(cin,garbage);
 	if (mode == 1){
 		cout<<">>> ";
@@ -79,26 +84,8 @@ int main(){
 		else if(Operator == "read"){
 			read(infor,&head);
 		}
-		else if(Operator == "cal"){
-			cal(infor,&head);
-		}
-		else if(Operator == "len"){
-			cout<<len(infor,&head)<<endl;	
-		}
 		else if(Operator == "find"){
 			if(find(infor,&head) == 1)
-				cout<<"yes"<<endl;
-			else
-				cout<<"no"<<endl;
-		}
-		else if(Operator == "sub"){
-			if(sub(infor,&head) == 1)
-				cout<<"yes"<<endl;
-			else
-				cout<<"no"<<endl;
-		}
-		else if(Operator == "equal"){
-			if(equal(infor,&head) == 1)
 				cout<<"yes"<<endl;
 			else
 				cout<<"no"<<endl;
@@ -161,12 +148,18 @@ int init(string infor,user_node** head){
 		cout<<infor<<" is already in the list, please change a name."<<endl;
 		return 0;
 	}else{
-		set* newset = new set;
-		newset->name = infor;
+		user* newuser = new user;
+		newuser->name = infor;
+		newuser->Set_NO(number + 1);
+		number++;
+		newuser->Save();
 		user_node* newnode = new user_node;
-		newnode->user_info = newset;
+		newnode->user_info = newuser;
 		newnode->next = NULL;
 		*head = insert_tail(newnode, *head);
+		cout<<"new user"<<endl;
+		cout<<"name: "<<newuser->name<<endl;
+		cout<<"NO: "<<newuser->Get_NO()<<endl;
 	}
 	return 1;
 }
@@ -191,12 +184,12 @@ int destory(string infor, user_node** head){
 			to_delete = temp->next;
 			temp->next = temp->next->next;
 		}
-		to_delete->user_info->destory();
+		to_delete->user_info->Destory();
 		delete to_delete;
 		return 1;
 	}
 }
-//insert a 1 3 4
+//insert a fans 1 3 4
 int insert(string infor, user_node** head){
 	int pos = infor.find_first_of(" ");
 	string name = infor.substr(0,pos);
@@ -207,13 +200,33 @@ int insert(string infor, user_node** head){
 		return 0;
 	}
 	pos = temp.find_first_of(" ");
+	string f = temp.substr(0,pos);
+	temp = temp.substr(pos+1,infor.length()-pos-1);
+	
+	pos = temp.find_first_of(" ");
 	while(pos != string::npos){
 		string number = temp.substr(0,pos);
-		node->user_info->insert(stoi(number));
+		if(f == "fans"){
+			node->user_info->Insert_fans(stoi(number));	
+		}
+		if(f == "friends"){
+			node->user_info->Insert_friends(stoi(number));	
+		}
+		if(f == "follows"){
+			node->user_info->Insert_follows(stoi(number));	
+		}
 		temp = temp.substr(pos+1,infor.length()-pos-1);
 		pos = temp.find_first_of(" ");
 	}
-	node->user_info->insert(stoi(temp));
+	if(f == "fans"){
+		node->user_info->Insert_fans(stoi(temp));	
+	}
+	if(f == "friends"){
+		node->user_info->Insert_friends(stoi(temp));	
+	}
+	if(f == "follows"){
+		node->user_info->Insert_follows(stoi(temp));	
+	}
 	return 1;
 }
 //delete b 1 2 3
@@ -223,16 +236,37 @@ int deleted(string infor, user_node** head){
 	string temp = infor.substr(pos+1,infor.length()-pos-1);
 	user_node* node = in_list(name,*head);
 	if(node == NULL){
-		cout<<"there is no "<<infor<<" in list"<<endl;
+		cout<<"there is no "<<name<<" in list"<<endl;
 		return 0;
 	}
 	pos = temp.find_first_of(" ");
+	string f = temp.substr(0,pos);
+	temp = temp.substr(pos+1,infor.length()-pos-1);
+	
+	pos = temp.find_first_of(" ");
 	while(pos != string::npos){
 		string number = temp.substr(0,pos);
-		node->user_info->Delete(stoi(number));
+		if(f == "fans"){
+			node->user_info->Delete_fans(stoi(number));	
+		}
+		if(f == "friends"){
+			node->user_info->Delete_friends(stoi(number));	
+		}
+		if(f == "follows"){
+			node->user_info->Delete_follows(stoi(number));	
+		}
 		temp = temp.substr(pos+1,infor.length()-pos-1);
+		pos = temp.find_first_of(" ");
 	}
-	node->user_info->Delete(stoi(temp));
+	if(f == "fans"){
+		node->user_info->Delete_fans(stoi(temp));	
+	}
+	if(f == "friends"){
+		node->user_info->Delete_friends(stoi(temp));	
+	}
+	if(f == "follows"){
+		node->user_info->Delete_follows(stoi(temp));	
+	}
 	return 1;
 }
 int print(string infor, user_node** head){
@@ -241,7 +275,7 @@ int print(string infor, user_node** head){
 		cout<<"there is no "<<infor<<" in list"<<endl;
 		return 0;
 	}else{
-		node->user_info->print();
+		node->user_info->Print();
 		return 1;
 	}
 }
@@ -251,19 +285,32 @@ int save(string infor, user_node** head){
 		cout<<"there is no "<<infor<<" in list"<<endl;
 		return 0;
 	}else{
-		node->user_info->save("./data/"+infor+".set");
+		node->user_info->Save();
 		return 1;
 	}
 }
 int read(string infor, user_node** head){
-	user_node* node = in_list(infor,*head);
-	if(node == NULL){
-		cout<<"there is no "<<infor<<" in list"<<endl;
+	int NO = stoi(infor);
+	if(NO > number){
+		cout<<"no such user"<<endl;
 		return 0;
-	}else{
-		node->user_info->read("./data/"+infor+".set");
-		return 1;
 	}
+	user* newuser = new user;
+	newuser->Set_NO(stoi(infor));
+	newuser->Read();
+	string name = newuser->name;
+	user_node* node = in_list(name,*head);
+	if(node != NULL){
+		cout<<"there is "<<name<<" already in list"<<endl;
+		delete newuser;
+		return 0;
+	}
+	user_node* newnode = new user_node;
+	newnode->user_info = newuser;
+	newnode->next = NULL;
+	*head = insert_tail(newnode, *head);
+	cout<<"the user name is "<<newuser->name<<endl;
+	return 1;
 }
 int find(string infor, user_node** head){
 	int pos;
@@ -275,12 +322,23 @@ int find(string infor, user_node** head){
 		cout<<"there is no "<<name<<" in list"<<endl;
 		return 0;
 	}else{
-		if(node->user_info->find(stoi(temp))){
+		pos = temp.find_first_of(" ");
+		string f = temp.substr(0,pos);
+		temp = temp.substr(pos+1,infor.length()-pos-1);
+		int flag = 0;
+		if(f == "fans"){
+			flag = node->user_info->Search_fans(stoi(temp));
+		}
+		if(f == "friends"){
+			flag = node->user_info->Search_friends(stoi(temp));
+		}
+		if(f == "follows"){
+			flag = node->user_info->Search_follows(stoi(temp));
+		}
+		if(flag)
 			return 1;
-		}
-		else{
+		else
 			return 0;
-		}
 	}
 }
 user_node* in_list(string name, user_node* head){

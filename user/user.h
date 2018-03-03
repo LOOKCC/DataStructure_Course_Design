@@ -35,8 +35,8 @@ public:
 	int Same_follows(user &a);
 	int Second_friends();
 	int Same_level(user &a);
-	int print();
-}
+	int Print();
+};
 
 
 #endif

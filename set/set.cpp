@@ -167,10 +167,13 @@ int set::save(string filename){
 		return 0;
 	information* info = to_array();
 	ofstream fout(filename);
-	fout<<this->name<<" "<<length()<<" "<<info->data;
-	for(int i = 1; i < length(); i++){
+	fout<<this->NO<<" "<<this->name<<" "<<length();
+	if(info){
 		fout<<" "<<info->data;
-		info = info->next;
+		for(int i = 1; i < length(); i++){
+			fout<<" "<<info->data;
+			info = info->next;
+		}
 	}
 	delete_infor(info);
 	return 1;
@@ -180,9 +183,11 @@ int set::read(string filename){
 		return 0;
 	string name;
 	int len;
+	int NO;
 	ifstream fin(filename);
-	fin>>name>>len;
+	fin>>NO>>name>>len;
 	this->name = name;
+	this->NO = NO;
 	for(int i = 0; i < len; i++){
 		int a;
 		fin>>a;
@@ -198,11 +203,3 @@ void set::delete_infor(information* head){
 		delete to_delete;
 	}
 }
-
-
-
-
-
-
-
-//name length { 1 2 3 4 5 }

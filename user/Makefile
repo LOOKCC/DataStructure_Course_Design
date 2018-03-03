@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/wangzhihao/code/school_works/data_structure/set
+CMAKE_SOURCE_DIR = /home/wangzhihao/code/school_works/data_structure/05/user
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/wangzhihao/code/school_works/data_structure/set
+CMAKE_BINARY_DIR = /home/wangzhihao/code/school_works/data_structure/05/user
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/wangzhihao/code/school_works/data_structure/set/CMakeFiles /home/wangzhihao/code/school_works/data_structure/set/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/wangzhihao/code/school_works/data_structure/05/user/CMakeFiles /home/wangzhihao/code/school_works/data_structure/05/user/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/wangzhihao/code/school_works/data_structure/set/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/wangzhihao/code/school_works/data_structure/05/user/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -204,6 +204,33 @@ set.cpp.s:
 	$(MAKE) -f CMakeFiles/Demo.dir/build.make CMakeFiles/Demo.dir/set.cpp.s
 .PHONY : set.cpp.s
 
+user.o: user.cpp.o
+
+.PHONY : user.o
+
+# target to build an object file
+user.cpp.o:
+	$(MAKE) -f CMakeFiles/Demo.dir/build.make CMakeFiles/Demo.dir/user.cpp.o
+.PHONY : user.cpp.o
+
+user.i: user.cpp.i
+
+.PHONY : user.i
+
+# target to preprocess a source file
+user.cpp.i:
+	$(MAKE) -f CMakeFiles/Demo.dir/build.make CMakeFiles/Demo.dir/user.cpp.i
+.PHONY : user.cpp.i
+
+user.s: user.cpp.s
+
+.PHONY : user.s
+
+# target to generate assembly for a file
+user.cpp.s:
+	$(MAKE) -f CMakeFiles/Demo.dir/build.make CMakeFiles/Demo.dir/user.cpp.s
+.PHONY : user.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -222,6 +249,9 @@ help:
 	@echo "... set.o"
 	@echo "... set.i"
 	@echo "... set.s"
+	@echo "... user.o"
+	@echo "... user.i"
+	@echo "... user.s"
 .PHONY : help
 
 

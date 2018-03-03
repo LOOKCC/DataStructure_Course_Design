@@ -6,6 +6,13 @@ using namespace std;
 set::set(){
 	this->data = new AVL_tree;
 	this->len = 0;
+	this->NO = 0;
+}
+int set::get_NO(){
+	return this->NO;
+}
+void set::set_NO(int x){
+	this->NO = x;
 }
 set::~set(){
 	destory();
@@ -38,6 +45,14 @@ void set::add(set &a,set &b){
 	delete_infor(a_info);
 	delete_infor(b_info);
 }
+void set::add(set &a){
+	information* a_info = a.to_array();
+	for(int i = 0; i < a.length(); i++){
+		this->insert(a_info->data);
+		a_info = a_info->next;
+	}
+	delete_infor(a_info);
+}
 void set::cross(set &a,set &b){
 	information* a_info = a.to_array();
 	for(int i = 0; i < a.length(); i++){
@@ -47,11 +62,29 @@ void set::cross(set &a,set &b){
 	}
 	delete_infor(a_info);
 }
+void set::cross(set &a){
+	information* info = this->to_array();
+	for(int i = 0; i < this->length(); i++){
+		if(!a.find(info->data))
+			this->Delete(info->data);
+		info = info->next;
+	}
+	delete_infor(info);
+}
 void set::minus(set &a,set &b){
 	information* a_info = a.to_array();
 	for(int i = 0; i < a.length(); i++){
 		if(!b.find(a_info->data))
 			this->insert(a_info->data);
+		a_info = a_info->next;
+	}
+	delete_infor(a_info);
+}
+void set::minus(set &a){
+	information* a_info = a.to_array();
+	for(int i = 0; i < a.length(); i++){
+		if(this->find(a_info->data))
+			this->Delete(a_info->data);
 		a_info = a_info->next;
 	}
 	delete_infor(a_info);
@@ -134,10 +167,13 @@ int set::save(string filename){
 		return 0;
 	information* info = to_array();
 	ofstream fout(filename);
-	fout<<this->name<<" "<<length()<<" "<<info->data;
-	for(int i = 1; i < length(); i++){
+	fout<<this->NO<<" "<<this->name<<" "<<length();
+	if(info){
 		fout<<" "<<info->data;
-		info = info->next;
+		for(int i = 1; i < length(); i++){
+			fout<<" "<<info->data;
+			info = info->next;
+		}
 	}
 	delete_infor(info);
 	return 1;
@@ -147,9 +183,11 @@ int set::read(string filename){
 		return 0;
 	string name;
 	int len;
+	int NO;
 	ifstream fin(filename);
-	fin>>name>>len;
+	fin>>NO>>name>>len;
 	this->name = name;
+	this->NO = NO;
 	for(int i = 0; i < len; i++){
 		int a;
 		fin>>a;
@@ -165,11 +203,3 @@ void set::delete_infor(information* head){
 		delete to_delete;
 	}
 }
-
-
-
-
-
-
-
-//name length { 1 2 3 4 5 }
