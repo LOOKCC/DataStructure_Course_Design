@@ -11,6 +11,12 @@ user::~user(){
 }
 int user::Set_NO(int x){
 	this->NO = x;
+	this->fans->name = this->name+"_fans";
+	this->fans->set_NO(this->NO);
+	this->friends->name = this->name+"_friends";
+	this->friends->set_NO(this->NO);
+	this->follows->name = this->name+"_follows";
+	this->follows->set_NO(this->NO);
 	return 1;
 }
 int user::Get_NO(){
@@ -78,9 +84,10 @@ int user::Search_friends(int x){
 }
 int user::Read(){
 	if(this->fans->read("./data/"+to_string(this->NO)+"_fans.set") &&
-		this->follows->read("./data/"+to_string(this->NO)+"_friends.set") &&
-		this->friends->read("./data/"+to_string(this->NO)+"_follows.set")){
-		this->name = this->fans->name;
+		this->follows->read("./data/"+to_string(this->NO)+"_follows.set") &&
+		this->friends->read("./data/"+to_string(this->NO)+"_friends.set")){
+		int pos  = this->fans->name.find_first_of("_");
+		this->name = this->fans->name.substr(0,pos);
 		return 1;
 	}
 	else
@@ -88,8 +95,8 @@ int user::Read(){
 }
 int user::Save(){
 	if(this->fans->save("./data/"+to_string(this->NO)+"_fans.set") &&
-		this->follows->save("./data/"+to_string(this->NO)+"_friends.set") &&
-		this->friends->save("./data/"+to_string(this->NO)+"_follows.set"))
+		this->follows->save("./data/"+to_string(this->NO)+"_follows.set") &&
+		this->friends->save("./data/"+to_string(this->NO)+"_friends.set"))
 		return 1;
 	else
 		return 0;
@@ -105,7 +112,7 @@ set* user::Get_fans(){
 }
 int user::Same_follows(user &a){
 	set result;
-	result.add(*(this->follows),*(a.Get_follows()));
+	result.cross(*(this->follows),*(a.Get_follows()));
 	result.print();
 	return 1;
 }
@@ -116,8 +123,13 @@ int user::Second_friends(){
 		set temp;
 		temp.read("./data/"+to_string(info->data)+"_friends.set");
 		result.add(temp);
+		//result.Delete(this->NO);
+		//result.Delete(info->data);
 		info = info->next;
 	}
+	cout<<"here"<<endl;
+	result.minus(*(this->friends));
+	result.Delete(this->NO);
 	result.print();
 	return 1;
 }
@@ -135,19 +147,20 @@ int user::Same_level(user &a){
 	fans_add.add(*(this->fans),*(a.Get_fans()));
 	set fans_cross;
 	fans_cross.cross(*(this->fans),*(a.Get_fans()));
-	float fans_result = fans_cross.length()/fans_add.length();
+	float fans_result = fans_cross.length()*1.0/fans_add.length();
 
 	set friends_add;
 	friends_add.add(*(this->friends),*(a.Get_friends()));
 	set friends_cross;
 	friends_cross.cross(*(this->friends),*(a.Get_friends()));
-	float friends_result = friends_cross.length()/friends_add.length();
+	float friends_result = friends_cross.length()*1.0/friends_add.length();
 
 	set follows_add;
 	follows_add.add(*(this->follows),*(a.Get_follows()));
 	set follows_cross;
 	follows_cross.cross(*(this->follows),*(a.Get_follows()));
-	float follows_result = follows_cross.length()/follows_add.length();
+	float follows_result = follows_cross.length()*1.0/follows_add.length();
 
-	cout<<"Same_level: "<<(fans_result+follows_result+friends_result)/3<<endl;
+	//cout<<fans_result<<" "<<friends_result<<" "<<follows_result<<endl;
+	cout<<"Same_level: "<<(fans_result+follows_result+friends_result)/3.0<<endl;
 }

@@ -74,16 +74,17 @@ AVL_node* AVL_tree::Insert(AVL_node* node, int x){
 			else
 				node = RL_rotation(node);
 	}else{
-		cout<<x<<" is already in the tree"<<endl;
+		//cout<<x<<" is already in the tree"<<endl;
 	}
 	node->height = max(Height(node->leftchildren),Height(node->rightchildren)) + 1;
 	return node;		
 }
 int AVL_tree::Delete(int x){
-	if((this->root = Delete(this->root,x)) == NULL){
-		return  0;
+	if(Search(x)){
+		this->root = Delete(this->root,x);
+		return  1;
 	}
-	return 1;
+	return 0;
 }
 AVL_node* AVL_tree::Delete(AVL_node* node, int x){
 	if(node == NULL)

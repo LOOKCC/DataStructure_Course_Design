@@ -80,10 +80,11 @@ AVL_node* AVL_tree::Insert(AVL_node* node, int x){
 	return node;		
 }
 int AVL_tree::Delete(int x){
-	if((this->root = Delete(this->root,x)) == NULL){
-		return  0;
+	if(Search(x)){
+		this->root = Delete(this->root,x);
+		return  1;
 	}
-	return 1;
+	return 0;
 }
 AVL_node* AVL_tree::Delete(AVL_node* node, int x){
 	if(node == NULL)

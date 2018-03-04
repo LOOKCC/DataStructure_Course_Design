@@ -4,8 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/wangzhihao/code/school_works/data_structure/avl/avl.cpp" "/home/wangzhihao/code/school_works/data_structure/avl/CMakeFiles/Demo.dir/avl.cpp.o"
-  "/home/wangzhihao/code/school_works/data_structure/avl/main.cpp" "/home/wangzhihao/code/school_works/data_structure/avl/CMakeFiles/Demo.dir/main.cpp.o"
+  "/home/wangzhihao/code/school_works/data_structure/05/avl/avl.cpp" "/home/wangzhihao/code/school_works/data_structure/05/avl/CMakeFiles/Demo.dir/avl.cpp.o"
+  "/home/wangzhihao/code/school_works/data_structure/05/avl/main.cpp" "/home/wangzhihao/code/school_works/data_structure/05/avl/CMakeFiles/Demo.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

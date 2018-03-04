@@ -17,9 +17,13 @@ int save(string infor, user_node** head);
 int read(string infor, user_node** head);
 int find(string infor, user_node** head);
 user_node* in_list(string name, user_node* head);
+user_node* in_list(int NO, user_node* head);
 user_node* insert_tail(user_node* newnode, user_node* head);
 void delete_list(user_node* head);
 string process(string str);
+int same_follows(string infor, user_node** head);
+int second_friends(string infor, user_node** head);
+int same_level(string infor, user_node** head);
 
 int number;
 
@@ -38,6 +42,10 @@ int main(){
 	ifstream number_file;
 	number_file.open("./data/number.txt");
 	number_file>>number;
+	number_file.close();
+	for(int i = 0; i < number+1; i++){
+		read(to_string(i),&head);
+	}
 	getline(cin,garbage);
 	if (mode == 1){
 		cout<<">>> ";
@@ -90,6 +98,15 @@ int main(){
 			else
 				cout<<"no"<<endl;
 		}
+		else if(Operator == "same_follows"){
+			same_follows(infor,&head);
+		}
+		else if(Operator == "second_friends"){
+			second_friends(infor,&head);
+		}
+		else if(Operator == "same_level"){
+			same_level(infor,&head);
+		}
 		else{
 			cout<<"can 't analysis shell"<<endl;
 		}
@@ -99,6 +116,11 @@ int main(){
 		}else{
 			getline(fin,temp);
 		}
+	}
+	user_node* temp_node = head;
+	while(temp_node != NULL){
+		temp_node->user_info->Save();
+		temp_node = temp_node->next;
 	}
 	delete_list(head);
 	return 0;
@@ -112,7 +134,7 @@ string process(string str){
 		str = str.erase(str.length()-1,1);
 	}
 	int flag = 0;
-	for(int i = 0; i < str.length(); ){
+	for(int i = 0; i < int(str.length()); ){
 		if(str[i] == ' '){
 			if(flag == 0){
 				flag = 1;
@@ -157,7 +179,7 @@ int init(string infor,user_node** head){
 		newnode->user_info = newuser;
 		newnode->next = NULL;
 		*head = insert_tail(newnode, *head);
-		cout<<"new user"<<endl;
+		cout<<"add a new user."<<endl;
 		cout<<"name: "<<newuser->name<<endl;
 		cout<<"NO: "<<newuser->Get_NO()<<endl;
 	}
@@ -204,29 +226,65 @@ int insert(string infor, user_node** head){
 	temp = temp.substr(pos+1,infor.length()-pos-1);
 	
 	pos = temp.find_first_of(" ");
-	while(pos != string::npos){
+	while(pos != int(string::npos)){
 		string number = temp.substr(0,pos);
 		if(f == "fans"){
-			node->user_info->Insert_fans(stoi(number));	
+			node->user_info->Insert_fans(stoi(number));
+			user_node* other_node = in_list(stoi(number),*head);
+			if(other_node == NULL){
+				cout<<"add a not exist user"<<endl;
+				return 0;
+			}
+			other_node->user_info->Insert_follows(node->user_info->Get_NO());
 		}
 		if(f == "friends"){
-			node->user_info->Insert_friends(stoi(number));	
+			node->user_info->Insert_friends(stoi(number));
+			user_node* other_node = in_list(stoi(number),*head);
+			if(other_node == NULL){
+				cout<<"add a not exist user"<<endl;
+				return 0;
+			}
+			other_node->user_info->Insert_friends(node->user_info->Get_NO());	
 		}
 		if(f == "follows"){
 			node->user_info->Insert_follows(stoi(number));	
+			user_node* other_node = in_list(stoi(number),*head);
+			if(other_node == NULL){
+				cout<<"add a not exist user"<<endl;
+				return 0;
+			}
+			other_node->user_info->Insert_fans(node->user_info->Get_NO());
 		}
 		temp = temp.substr(pos+1,infor.length()-pos-1);
 		pos = temp.find_first_of(" ");
 	}
 	if(f == "fans"){
-		node->user_info->Insert_fans(stoi(temp));	
-	}
-	if(f == "friends"){
-		node->user_info->Insert_friends(stoi(temp));	
-	}
-	if(f == "follows"){
-		node->user_info->Insert_follows(stoi(temp));	
-	}
+			node->user_info->Insert_fans(stoi(temp));
+			user_node* other_node = in_list(stoi(temp),*head);
+			if(other_node == NULL){
+				cout<<"add a not exist user"<<endl;
+				return 0;
+			}
+			other_node->user_info->Insert_follows(node->user_info->Get_NO());
+		}
+		if(f == "friends"){
+			node->user_info->Insert_friends(stoi(temp));
+			user_node* other_node = in_list(stoi(temp),*head);
+			if(other_node == NULL){
+				cout<<"add a not exist user"<<endl;
+				return 0;
+			}
+			other_node->user_info->Insert_friends(node->user_info->Get_NO());	
+		}
+		if(f == "follows"){
+			node->user_info->Insert_follows(stoi(temp));	
+			user_node* other_node = in_list(stoi(temp),*head);
+			if(other_node == NULL){
+				cout<<"add a not exist user"<<endl;
+				return 0;
+			}
+			other_node->user_info->Insert_fans(node->user_info->Get_NO());
+		}
 	return 1;
 }
 //delete b 1 2 3
@@ -244,29 +302,65 @@ int deleted(string infor, user_node** head){
 	temp = temp.substr(pos+1,infor.length()-pos-1);
 	
 	pos = temp.find_first_of(" ");
-	while(pos != string::npos){
+	while(pos != int(string::npos)){
 		string number = temp.substr(0,pos);
 		if(f == "fans"){
-			node->user_info->Delete_fans(stoi(number));	
+			node->user_info->Delete_fans(stoi(number));
+			user_node* other_node = in_list(stoi(number),*head);
+			if(other_node == NULL){
+				cout<<"add a not exist user"<<endl;
+				return 0;
+			}
+			other_node->user_info->Delete_follows(node->user_info->Get_NO());
 		}
 		if(f == "friends"){
-			node->user_info->Delete_friends(stoi(number));	
+			node->user_info->Delete_friends(stoi(number));
+			user_node* other_node = in_list(stoi(number),*head);
+			if(other_node == NULL){
+				cout<<"add a not exist user"<<endl;
+				return 0;
+			}
+			other_node->user_info->Delete_friends(node->user_info->Get_NO());	
 		}
 		if(f == "follows"){
 			node->user_info->Delete_follows(stoi(number));	
+			user_node* other_node = in_list(stoi(number),*head);
+			if(other_node == NULL){
+				cout<<"add a not exist user"<<endl;
+				return 0;
+			}
+			other_node->user_info->Delete_fans(node->user_info->Get_NO());
 		}
 		temp = temp.substr(pos+1,infor.length()-pos-1);
 		pos = temp.find_first_of(" ");
 	}
 	if(f == "fans"){
-		node->user_info->Delete_fans(stoi(temp));	
-	}
-	if(f == "friends"){
-		node->user_info->Delete_friends(stoi(temp));	
-	}
-	if(f == "follows"){
-		node->user_info->Delete_follows(stoi(temp));	
-	}
+			node->user_info->Delete_fans(stoi(temp));
+			user_node* other_node = in_list(stoi(temp),*head);
+			if(other_node == NULL){
+				cout<<"add a not exist user"<<endl;
+				return 0;
+			}
+			other_node->user_info->Delete_follows(node->user_info->Get_NO());
+		}
+		if(f == "friends"){
+			node->user_info->Delete_friends(stoi(temp));
+			user_node* other_node = in_list(stoi(temp),*head);
+			if(other_node == NULL){
+				cout<<"add a not exist user"<<endl;
+				return 0;
+			}
+			other_node->user_info->Delete_friends(node->user_info->Get_NO());	
+		}
+		if(f == "follows"){
+			node->user_info->Delete_follows(stoi(temp));	
+			user_node* other_node = in_list(stoi(temp),*head);
+			if(other_node == NULL){
+				cout<<"add a not exist user"<<endl;
+				return 0;
+			}
+			other_node->user_info->Delete_fans(node->user_info->Get_NO());
+		}
 	return 1;
 }
 int print(string infor, user_node** head){
@@ -309,7 +403,7 @@ int read(string infor, user_node** head){
 	newnode->user_info = newuser;
 	newnode->next = NULL;
 	*head = insert_tail(newnode, *head);
-	cout<<"the user name is "<<newuser->name<<endl;
+	cout<<"the user name is "<<newuser->name<<" NO is "<<stoi(infor)<<endl;
 	return 1;
 }
 int find(string infor, user_node** head){
@@ -341,10 +435,65 @@ int find(string infor, user_node** head){
 			return 0;
 	}
 }
+int same_follows(string infor, user_node** head){
+	int pos;
+	pos = infor.find_first_of(" ");
+	string name1 = infor.substr(0,pos);
+	string name2 = infor.substr(pos+1,infor.length()-pos-1);
+	user_node* node1 = in_list(name1,*head);
+	user_node* node2 = in_list(name2,*head);
+	if(node1 == NULL || node2 == NULL){
+		cout<<"there is no "<<name1<<" or "<<name2<<" in list"<<endl;
+		return 0;
+	}else{
+		if(node1->user_info->Same_follows(*(node2->user_info))){
+			return 1;
+		}else{
+			return 0;
+		}
+	}
+}
+int second_friends(string infor, user_node** head){
+	user_node* node = in_list(infor,*head);
+	if(node == NULL){
+		cout<<"there is no "<<infor<<" in list"<<endl;
+		return 0;
+	}else{
+		node->user_info->Second_friends();
+		return 1;
+	}
+}
+int same_level(string infor, user_node** head){
+	int pos;
+	pos = infor.find_first_of(" ");
+	string name1 = infor.substr(0,pos);
+	string name2 = infor.substr(pos+1,infor.length()-pos-1);
+	user_node* node1 = in_list(name1,*head);
+	user_node* node2 = in_list(name2,*head);
+	if(node1 == NULL || node2 == NULL){
+		cout<<"there is no "<<name1<<" or "<<name2<<" in list"<<endl;
+		return 0;
+	}else{
+		if(node1->user_info->Same_level(*(node2->user_info))){
+			return 1;
+		}else{
+			return 0;
+		}
+	}
+}
 user_node* in_list(string name, user_node* head){
 	user_node* node = head;
 	while(node != NULL){
 		if(node->user_info->name == name)
+			return node;
+		node = node->next;
+	}
+	return NULL;
+}
+user_node* in_list(int NO, user_node* head){
+	user_node* node = head;
+	while(node != NULL){
+		if(node->user_info->Get_NO() == NO)
 			return node;
 		node = node->next;
 	}

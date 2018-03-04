@@ -169,8 +169,7 @@ int set::save(string filename){
 	ofstream fout(filename);
 	fout<<this->NO<<" "<<this->name<<" "<<length();
 	if(info){
-		fout<<" "<<info->data;
-		for(int i = 1; i < length(); i++){
+		for(int i = 0; i < length(); i++){
 			fout<<" "<<info->data;
 			info = info->next;
 		}
