@@ -1,5 +1,6 @@
 import random
 import numpy as np
+'''
 print('Begin generate data,please wait...')
 name = range(100)
 pre = './data/'
@@ -28,7 +29,7 @@ def generate_friends():
                 f.write(' '+str(k))
 
 
-def generate_fansfollows()
+def generate_fansfollows():
     total = range(1,10000)
     finall = random.sample(total,2000)
     fans = []
@@ -47,14 +48,22 @@ def generate_fansfollows()
         fans_file = open(pre+file_name_fans+suf,'w')
         fans_file.write(str(i)+' '+file_name_fans+' '+ str(len(fans[i])))
         for j in fans[i]:
-            fans_file.write(' '+j)
+            fans_file.write(' '+str(j))
         
         file_name_follows = str(i)+'_follows'
         follows_file = open(pre+file_name_follows+suf,'w')
         follows_file.write(str(i)+' '+file_name_follows+' '+ str(len(follows[i])))
         for j in follows[i]:
-            follows_file.write(' '+j)
+            follows_file.write(' '+str(j))
 
+generate_friends()
+generate_fansfollows()
+'''
+f = open('test.set','w')
+s = 'second_friends '
+for i in range(100):
+    f.write(s + str(i) +'\n')
+f.write('exit\n')
 
 
 

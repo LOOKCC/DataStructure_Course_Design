@@ -83,8 +83,9 @@ void set::minus(set &a,set &b){
 void set::minus(set &a){
 	information* a_info = a.to_array();
 	for(int i = 0; i < a.length(); i++){
-		if(this->find(a_info->data))
+		if(this->find(a_info->data)){
 			this->Delete(a_info->data);
+		}
 		a_info = a_info->next;
 	}
 	delete_infor(a_info);
@@ -163,7 +164,7 @@ information* set::to_array(){
 	return head;
 }
 int set::save(string filename){
-	if(this->len == -1)
+	if(this->len == -1 || this->NO == -1)
 		return 0;
 	information* info = to_array();
 	ofstream fout(filename);
@@ -184,15 +185,21 @@ int set::read(string filename){
 	int len;
 	int NO;
 	ifstream fin(filename);
-	fin>>NO>>name>>len;
-	this->name = name;
-	this->NO = NO;
-	for(int i = 0; i < len; i++){
-		int a;
-		fin>>a;
-		insert(a);
+	if(fin.is_open()){
+		fin>>NO>>name>>len;
+		this->name = name;
+		this->NO = NO;
+		for(int i = 0; i < len; i++){
+			int a;
+			fin>>a;
+			insert(a);
+		}
+		return 1;	
+	}else{
+		this->name = "";
+		this->NO = -1;
+		return 0;
 	}
-	return 1;
 }
 void set::delete_infor(information* head){
 	information* temp = head;

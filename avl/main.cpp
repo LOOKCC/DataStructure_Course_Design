@@ -115,12 +115,12 @@ string process(string str){
 	return str;
 } 
 void man(){
-	cout<<"init a //初始化一个名为a的集合"<<endl;
-	cout<<"destory b //销毁一个名为b的集合"<<endl;
-	cout<<"insert a 1 2 //向集合a中添加元素1和2"<<endl;
-	cout<<"delete a 3 //在集合a中删除元素3"<<endl;
-	cout<<"print a //打印集合a中的元素"<<endl;
-	cout<<"find a 3 //3是否在集合a中"<<endl;
+	cout<<"init a //初始化一个名为a的AVL"<<endl;
+	cout<<"destory b //销毁一个名为b的AVL"<<endl;
+	cout<<"insert a 1 2 //向AVLa中添加元素1和2"<<endl;
+	cout<<"delete a 3 //在AVLa中删除元素3"<<endl;
+	cout<<"print a //打印AVLa中的元素"<<endl;
+	cout<<"find a 3 //3是否在AVLa中"<<endl;
 }
 int init(string infor,tree_node** head){
 	if(in_list(infor, *head) != NULL){

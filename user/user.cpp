@@ -90,8 +90,11 @@ int user::Read(){
 		this->name = this->fans->name.substr(0,pos);
 		return 1;
 	}
-	else
+	else{
+		this->name = to_string(this->NO);
+		cout<<"file open error,the user is empty"<<endl;
 		return 0;
+	}
 }
 int user::Save(){
 	if(this->fans->save("./data/"+to_string(this->NO)+"_fans.set") &&
@@ -127,7 +130,6 @@ int user::Second_friends(){
 		//result.Delete(info->data);
 		info = info->next;
 	}
-	cout<<"here"<<endl;
 	result.minus(*(this->friends));
 	result.Delete(this->NO);
 	result.print();
@@ -163,4 +165,5 @@ int user::Same_level(user &a){
 
 	//cout<<fans_result<<" "<<friends_result<<" "<<follows_result<<endl;
 	cout<<"Same_level: "<<(fans_result+follows_result+friends_result)/3.0<<endl;
+	return 1;
 }

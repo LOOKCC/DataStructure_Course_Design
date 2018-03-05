@@ -184,15 +184,20 @@ int set::read(string filename){
 	int len;
 	int NO;
 	ifstream fin(filename);
-	fin>>NO>>name>>len;
-	this->name = name;
-	this->NO = NO;
-	for(int i = 0; i < len; i++){
-		int a;
-		fin>>a;
-		insert(a);
+	if(fin.is_open()){
+		fin>>NO>>name>>len;
+		this->name = name;
+		this->NO = NO;
+		for(int i = 0; i < len; i++){
+			int a;
+			fin>>a;
+			insert(a);
+		}
+		return 1;	
+	}else{
+		cout<<"no such file"<<endl;
+		return 0;
 	}
-	return 1;
 }
 void set::delete_infor(information* head){
 	information* temp = head;

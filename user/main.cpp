@@ -2,6 +2,7 @@
 #include<fstream>
 #include<string>
 #include"user.h"
+#include<cstdio>
 using namespace std;
 typedef struct user_node{
 	user* user_info;
@@ -24,13 +25,13 @@ string process(string str);
 int same_follows(string infor, user_node** head);
 int second_friends(string infor, user_node** head);
 int same_level(string infor, user_node** head);
-
+int delete_user(int NO,user_node** head);
 int number;
 
 int main(){
 	//instructions
-	cout<<"It's a code or interactive shell for set"<<endl;
-	cout<<"Version 0.0"<<endl;
+	cout<<"It's a code or interactive shell for set, man for manual."<<endl;
+	cout<<"Version 2.1"<<endl;
 	cout<<"Please input which mode do you want use, 1 is shell, 0 is code."<<endl;
 	int mode;                   //use shell mode or code mode
 	cin>>mode;                  //get mode
@@ -39,10 +40,9 @@ int main(){
 	string filename;            //code mode filename
 	ifstream fin;               //code mode file
 	user_node* head = NULL;
-	ifstream number_file;
-	number_file.open("./data/number.txt");
-	number_file>>number;
-	number_file.close();
+	ifstream ifnumber("./data/number.txt");
+	ifnumber>>number;
+	ifnumber.close();
 	for(int i = 0; i < number+1; i++){
 		read(to_string(i),&head);
 	}
@@ -123,6 +123,9 @@ int main(){
 		temp_node = temp_node->next;
 	}
 	delete_list(head);
+	ofstream ofnumber("./data/number.txt");
+	ofnumber<<number;
+	ofnumber.close();
 	return 0;
 }
 
@@ -150,20 +153,16 @@ string process(string str){
 	return str;
 } 
 void man(){
-	cout<<"init a //初始化一个名为a的集合"<<endl;
-	cout<<"destory b //销毁一个名为b的集合"<<endl;
-	cout<<"insert a 1 2 //向集合a中添加元素1和2"<<endl;
-	cout<<"delete a 3 //在集合a中删除元素3"<<endl;
-	cout<<"print a //打印集合a中的元素"<<endl;
-	cout<<"cal c=a+b //求集合a和b的并"<<endl;
-	cout<<"cal c=a*b //求集合a和b的交"<<endl;
-	cout<<"cal c=a-b //求集合a和b的差"<<endl;
-	cout<<"len a //求集合a的长度"<<endl;
-	cout<<"find a 3 //3是否在集合a中"<<endl;
-	cout<<"sub a b //b是否为a的子集"<<endl;
-	cout<<"equal a b //a和b是否相等"<<endl;
-	cout<<"save a //将集合a存到文件名为a.set的文件里"<<endl;
-	cout<<"read d //读取集合d.set"<<endl;
+	cout<<"init a //初始化一个名为a的用户"<<endl;
+	cout<<"destory b //销毁一个名为b的用户"<<endl;
+	cout<<"insert a fans 2 3 //向用户a的粉丝集中添加用户2和3"<<endl;
+	cout<<"delete a friends 3 4 //在用户a的好友中删除用户3 4"<<endl;
+	cout<<"print a //打印用户a的信息"<<endl;
+	cout<<"find a follows 3 //用户3是否在用户a的关注中"<<endl;
+	cout<<"save a //将用户a存到本地"<<endl;
+	cout<<"same_follows a d //用户d和a的共同关注"<<endl;
+	cout<<"second_friends d //用户d的二次好友"<<endl;
+	cout<<"same_level d s //用户d和用户s的共同程度"<<endl;
 }
 int init(string infor,user_node** head){
 	if(in_list(infor, *head) != NULL){
@@ -206,6 +205,17 @@ int destory(string infor, user_node** head){
 			to_delete = temp->next;
 			temp->next = temp->next->next;
 		}
+		int NO = to_delete->user_info->Get_NO();
+		delete_user(NO,head);
+		string str = "./data/"+to_string(NO)+"_fans.set";
+		const char* fans_file = str.c_str();  
+		remove(fans_file);
+		str = "./data/"+to_string(NO)+"_friends.set";
+		const char* friends_file = str.c_str();
+		remove(friends_file);
+		str = "./data/"+to_string(NO)+"_follows.set" ;
+		const char* follows_file = str.c_str();
+		remove(follows_file);
 		to_delete->user_info->Destory();
 		delete to_delete;
 		return 1;
@@ -518,4 +528,14 @@ void delete_list(user_node* head){
 		temp = temp->next;
 		delete to_delete;
 	}
+}
+int delete_user(int NO,user_node** head){
+	user_node* temp = *head;
+	while(temp != NULL){
+		temp->user_info->Delete_friends(NO);
+		temp->user_info->Delete_fans(NO);
+		temp->user_info->Delete_follows(NO);
+		temp = temp->next;
+	}
+	return 0;
 }

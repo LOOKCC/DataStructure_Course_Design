@@ -8,7 +8,8 @@ int AVL_tree::Height(AVL_node* node){
 	if(node == NULL){
 		return 0;
 	}else{
-		return node->height;
+		return max(Height(node->leftchildren),Height(node->rightchildren))+1;
+		//return node->height;
 	}
 }
 int AVL_tree::max(int x, int y){
@@ -42,10 +43,13 @@ AVL_node* AVL_tree::RR_rotation(AVL_node* node){
 	return temp;	
 }
 int AVL_tree::Insert(int x){
-	if((this->root = Insert(this->root,x)) == NULL){
+	if(Search(x)){
+		cout<<x<<" is already in the tree"<<endl;
 		return  0;
+	}else{
+		this->root = Insert(this->root,x);
+		return 1;	
 	}
-	return 1;
 }
 AVL_node* AVL_tree::Insert(AVL_node* node, int x){
 	if(node == NULL){
@@ -74,7 +78,7 @@ AVL_node* AVL_tree::Insert(AVL_node* node, int x){
 			else
 				node = RL_rotation(node);
 	}else{
-		cout<<x<<" is already in the tree"<<endl;
+		//cout<<x<<" is already in the tree"<<endl;
 	}
 	node->height = max(Height(node->leftchildren),Height(node->rightchildren)) + 1;
 	return node;		
