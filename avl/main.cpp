@@ -99,7 +99,7 @@ string process(string str){
 		str = str.erase(str.length()-1,1);
 	}
 	int flag = 0;
-	for(int i = 0; i < str.length(); ){
+	for(int i = 0; i < int(str.length()); ){
 		if(str[i] == ' '){
 			if(flag == 0){
 				flag = 1;
@@ -173,7 +173,7 @@ int insert(string infor, tree_node** head){
 		return 0;
 	}
 	pos = temp.find_first_of(" ");
-	while(pos != string::npos){
+	while(pos != int(string::npos)){
 		string number = temp.substr(0,pos);
 		node->tree_info->Insert(stoi(number));
 		temp = temp.substr(pos+1,infor.length()-pos-1);
@@ -193,7 +193,7 @@ int deleted(string infor, tree_node** head){
 		return 0;
 	}
 	pos = temp.find_first_of(" ");
-	while(pos != string::npos){
+	while(pos != int(string::npos)){
 		string number = temp.substr(0,pos);
 		node->tree_info->Delete(stoi(number));
 		temp = temp.substr(pos+1,infor.length()-pos-1);

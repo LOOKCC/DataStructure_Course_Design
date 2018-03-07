@@ -43,7 +43,7 @@ AVL_node* AVL_tree::RR_rotation(AVL_node* node){
 	return temp;	
 }
 int AVL_tree::Insert(int x){
-	if(Search(x)){
+	if(Search(x)){ 
 		cout<<x<<" is already in the tree"<<endl;
 		return  0;
 	}else{
@@ -72,13 +72,14 @@ AVL_node* AVL_tree::Insert(AVL_node* node, int x){
 		}
 	}else if(x > node->value){
 		node->rightchildren = Insert(node->rightchildren, x);
-		if(Height(node->rightchildren) - Height(node->leftchildren) == 2)
+		if(Height(node->rightchildren) - Height(node->leftchildren) == 2){
 			if(x > node->rightchildren->value)
 				node = RR_rotation(node); 
 			else
 				node = RL_rotation(node);
+		}
 	}else{
-		//cout<<x<<" is already in the tree"<<endl;
+		;//cout<<x<<" is already in the tree"<<endl;
 	}
 	node->height = max(Height(node->leftchildren),Height(node->rightchildren)) + 1;
 	return node;		
@@ -88,6 +89,7 @@ int AVL_tree::Delete(int x){
 		this->root = Delete(this->root,x);
 		return  1;
 	}
+	cout<<x<<" delete failled."<<endl;
 	return 0;
 }
 AVL_node* AVL_tree::Delete(AVL_node* node, int x){
@@ -193,6 +195,7 @@ AVL_node* AVL_tree::Search(AVL_node* node, int x){
 		return left;
 	if(left == NULL && right != NULL)
 		return right;
+	return NULL;
 }
 AVL_tree::AVL_tree(){
 	this->name = "";
