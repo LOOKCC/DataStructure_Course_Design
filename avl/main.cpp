@@ -207,7 +207,9 @@ int print(string infor, tree_node** head){
 		cout<<"there is no "<<infor<<" in list"<<endl;
 		return 0;
 	}else{
-		node->tree_info->Traverse();
+		node->tree_info->Pre_Traverse();
+		node->tree_info->In_Traverse();
+		node->tree_info->Af_Traverse();
 		return 1;
 	}
 }

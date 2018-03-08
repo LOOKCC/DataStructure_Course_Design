@@ -16,6 +16,9 @@ class AVL_tree{
 private:
 	AVL_node* root;
 	void Traverse(AVL_node* node);
+	void Pre_Traverse(AVL_node* node);
+	void In_Traverse(AVL_node* node);
+	void Af_Traverse(AVL_node* node);
 	AVL_node* Search(AVL_node* node, int x);
 	AVL_node* LL_rotation(AVL_node* node);
 	AVL_node* LR_rotation(AVL_node* node);
@@ -37,6 +40,9 @@ public:
 	int Insert(int x);
 	int Delete(int x);
 	void Traverse();
+	void Pre_Traverse();
+	void In_Traverse();
+	void Af_Traverse();
 	int Height();
 	AVL_node* Get_root();
 	information* to_array_recursive(information* head,AVL_node* node);

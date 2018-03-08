@@ -109,7 +109,7 @@ AVL_node* AVL_tree::Delete(AVL_node* node, int x){
 		if(Height(node->leftchildren) - Height(node->rightchildren) == 2){
 			AVL_node* temp = node->leftchildren;
 			if(Height(temp->leftchildren) > Height(temp->rightchildren))
-				node = LL_rotation(node);
+				node = LnumberL_rotation(node);
 			else
 				node = LR_rotation(node);
 		}
@@ -162,6 +162,46 @@ void AVL_tree::Traverse(AVL_node* node){
 	cout<<node->value<<" ";
 	Traverse(node->rightchildren);
 }
+
+
+void AVL_tree::In_Traverse(){
+	In_Traverse(this->root);
+	cout<<endl;
+}
+void AVL_tree::In_Traverse(AVL_node* node){
+	if(node == NULL)
+		return ;
+	In_Traverse(node->leftchildren);
+	cout<<node->value<<" ";
+	In_Traverse(node->rightchildren);
+}
+
+void AVL_tree::Pre_Traverse(){
+	Pre_Traverse(this->root);
+	cout<<endl;
+}
+void AVL_tree::Pre_Traverse(AVL_node* node){
+	if(node == NULL)
+		return ;
+	cout<<node->value<<" ";
+	Pre_Traverse(node->leftchildren);
+	Pre_Traverse(node->rightchildren);
+}
+
+void AVL_tree::Af_Traverse(){
+	Af_Traverse(this->root);
+	cout<<endl;
+}
+void AVL_tree::Af_Traverse(AVL_node* node){
+	if(node == NULL)
+		return ;
+	Af_Traverse(node->leftchildren);
+	Af_Traverse(node->rightchildren);
+	cout<<node->value<<" ";
+}
+
+
+
 int AVL_tree::Destory(){
 	Destory(this->root);
 	return 1;
